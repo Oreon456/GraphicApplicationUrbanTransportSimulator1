@@ -10,3 +10,5 @@ class Road:
         self.car = False
     def is_car(self):
         return self.car
+    def draw(self, screen):
+        screen.blit()
