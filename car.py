@@ -52,12 +52,15 @@ class Car:
 
             if (matrix[tile1[0]][tile1[1]])!=0:
 
+
                 if tile1!=self.tile:
                     self.tile = tile1
 
                     list_of_choices = directions_math_transcriptor[matrix[self.tile[0]][self.tile[1]].direction]
+                    print(matrix[self.tile[0]][self.tile[1]].direction)
                     print(matrix[self.tile[0]][self.tile[1]].direction, self.tile)
-                    print(matrix1[self.tile[0]][self.tile[1]])
+                    print(matrix[self.tile[0]][self.tile[1]], list_of_choices)
+                    print(list_of_choices)
 
                     new_dir = get_new_direction([self.dir1, self.dir2], list_of_choices)
                     self.dir1, self.dir2 =new_dir[0], new_dir[1]
