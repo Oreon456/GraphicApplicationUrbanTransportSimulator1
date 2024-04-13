@@ -33,7 +33,7 @@ class Car:
         self.speed = speed
         self.dir1 = dir1
         self.dir2 = dir2
-        self.image = pygame.Surface((20, 20))
+        self.image = pygame.Surface((10, 10))
         self.image.fill((255, 0, 0))
         self.tile = (self.x//25, self.y//25)
         self.tile = self.tile[::-1]
@@ -64,9 +64,18 @@ class Car:
 
                     new_dir = get_new_direction([self.dir1, self.dir2], list_of_choices)
                     self.dir1, self.dir2 =new_dir[0], new_dir[1]
-
-
-                self.x, self.y = p_x, p_y
+                if self.dir1==1:
+                    self.x=p_x
+                    self.y = self.tile[0]*25+15
+                elif self.dir1==-1:
+                    self.x = p_x
+                    self.y = self.tile[0] * 25
+                elif self.dir2==-1:
+                    self.y = p_y
+                    self.x = self.tile[1] * 25 + 15
+                elif self.dir2==1:
+                    self.y = p_y
+                    self.x = self.tile[1] * 25
             return True
         except:
             print('false')
@@ -77,4 +86,4 @@ class Car:
         response = self.update()
         if response:
             screen.blit(self.image, (self.x, self.y))
-
+        return response

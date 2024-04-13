@@ -6,9 +6,9 @@ import random
 
 
 
-odds = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31]
-even = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30]
-a, b = random.randint(1, 10), random.randint(1, 10)
+odds = [5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31]
+even = [4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30]
+a, b = random.randint(5, 10), random.randint(5, 10)
 roads1 = list(set(random.choice(odds) for i in range(a)))
 roads2 = list(set(random.choice(even) for j in range(b)))
 
