@@ -1,4 +1,3 @@
-from road import Road
 import pygame
 import random
 from world import matrix
@@ -18,23 +17,30 @@ def get_new_direction(prev, l):
 
 
 
-#
-#
-# directs = {1: 'intersection', 2:'up/down', 3: 'left/right', 0:'lol'}
-# for i in range(len(matrix)):
-#     for j in range(len(matrix)):
-#         if matrix[i][j]!=0:
-#             print(matrix[i][j])
-#             matrix[i][j] = Road(directs[matrix[i][j]])
-
 class Car:
-    def __init__(self, x, y, speed, dir1, dir2): # dir1 и dir2 могут быть 1 -1 и 0
+    def __init__(self, x, y, speed, dir1, dir2, type): # dir1 и dir2 могут быть 1 -1 и 0
+        self.car_type = type
         self.x, self.y = x, y
         self.speed = speed
+        if self.car_type==1:
+            self.speed-=1
+
         self.dir1 = dir1
         self.dir2 = dir2
-        self.image = pygame.Surface((10, 10))
-        self.image.fill((255, 0, 0))
+
+        if self.car_type == 1:
+            self.size1 = 25
+            self.size2 = 10
+        else:
+            self.size1 = 10
+            self.size2 = 10
+
+        self.image = pygame.Surface((self.size2, self.size1))
+        if self.car_type==1:
+
+            self.image.fill((255, 0, 0))
+        else:
+            self.image.fill((0, 0, 255))
         self.tile = (self.x//25, self.y//25)
         self.tile = self.tile[::-1]
     def update(self):
@@ -63,6 +69,15 @@ class Car:
                     print(list_of_choices)
 
                     new_dir = get_new_direction([self.dir1, self.dir2], list_of_choices)
+                    if self.dir1!=new_dir[0]:
+                        self.size1, self.size2 = self.size2, self.size1
+                        self.image = pygame.Surface((self.size2, self.size1))
+                        if self.car_type == 1:
+
+                            self.image.fill((255, 0, 0))
+                        else:
+                            self.image.fill((0, 0, 255))
+
                     self.dir1, self.dir2 =new_dir[0], new_dir[1]
                 if self.dir1==1:
                     self.x=p_x
