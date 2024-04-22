@@ -36,7 +36,7 @@ My_world = World(matrix, screen)
 objects = []
 while running:
     objects = objects+generate_cars(cnt)
-    objects.sort(key = lambda x: -x.speed)
+    objects.sort(key = lambda x: x.speed)
     cnt = 0
     screen.fill((0, 0, 0))
     for event in pygame.event.get():

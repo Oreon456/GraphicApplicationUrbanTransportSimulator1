@@ -109,13 +109,12 @@ class Car:
                 for i in cords:
                     x1, y1 = i.x, i.y
                     s1, s2 = i.size1, i.size2
-                    print(self.check_rectangle_intersection(self.x, self.y, x1, y1, x1 + s1, y1 + s2))
-                    print(self.check_rectangle_intersection(old_x, old_y, x1, y1, x1 + s1, y1 + s2))
-                    if not self.check_rectangle_intersection(self.x, self.y, x1, y1, x1 + s1, y1 + s2) and self.check_rectangle_intersection(old_x, old_y, x1, y1, x1 + s1, y1 + s2) and i.moved:
-                        self.x, self.y = old_x, old_y
-                        self.moved = False
-                        print('error')
-                        break
+                    if not self.check_rectangle_intersection(self.x, self.y, x1, y1, x1 + s1, y1 + s2) and self.check_rectangle_intersection(old_x, old_y, x1, y1, x1 + s1, y1 + s2):
+                        if i.moved and i!=self:
+                            self.x, self.y = old_x, old_y
+                            self.moved = False
+                            print('error')
+                            break
                     else:
                         self.moved = True
 
