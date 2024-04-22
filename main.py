@@ -31,11 +31,12 @@ def generate_cars(cnt):
         cars.append(Car(random.choice(roads2)*25, 0, random.randint(5, 7), 0, 1, type1))
     return cars
 
-cnt = 50
+cnt = 20
 My_world = World(matrix, screen)
 objects = []
 while running:
     objects = objects+generate_cars(cnt)
+    objects.sort(key = lambda x: -x.speed)
     cnt = 0
     screen.fill((0, 0, 0))
     for event in pygame.event.get():
@@ -43,7 +44,7 @@ while running:
             running = False
     My_world.draw()
     for i in objects:
-        if not i.draw(screen):
+        if not i.draw(screen, objects):
             objects.remove(i)
             cnt+=1
 
