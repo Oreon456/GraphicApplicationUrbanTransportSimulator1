@@ -31,7 +31,7 @@ def generate_cars(cnt):
         cars.append(Car(random.choice(roads2)*25, 0, random.randint(5, 7), 0, 1, type1))
     return cars
 
-cnt = 20
+cnt = 50
 My_world = World(matrix, screen)
 objects = []
 while running:

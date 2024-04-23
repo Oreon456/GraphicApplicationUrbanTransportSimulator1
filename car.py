@@ -74,7 +74,7 @@ class Car:
         try:
             self.cords_updated = False
 
-            if (matrix[tile1[0]][tile1[1]])!=0:
+            if True:
 
                 if tile1!=self.tile:
                     self.tile = tile1
@@ -96,32 +96,39 @@ class Car:
 
                 if self.dir1==1:
                     self.cords_updated =True
-                    self.x=p_x
-                    self.y = self.tile[0]*25+15
+                    pot_x=p_x
+                    pot_y = self.tile[0]*25+15
 
                 elif self.dir1==-1:
                     self.cords_updated = True
-                    self.x = p_x
-                    self.y = self.tile[0] * 25
+                    pot_x = p_x
+                    pot_y = self.tile[0] * 25
                 elif self.dir2==-1:
                     self.cords_updated = True
-                    self.y = p_y
-                    self.x = self.tile[1] * 25 + 15
+                    pot_y = p_y
+                    pot_x = self.tile[1] * 25 + 15
                 else:
-                    self.y = p_y
+                    pot_y = p_y
                     self.cords_updated = True
-                    self.x = self.tile[1] * 25
+                    pot_x = self.tile[1] * 25
+                fl = False
                 for i in cords:
                     x1, y1 = i.x, i.y
                     s1, s2 = i.size1, i.size2
-                    if not self.check_rectangle_intersection(self.x, self.y, x1-s1, y1-s1, x1, y1) and self.check_rectangle_intersection(old_x, old_y, x1-s1, y1-s1, x1, y1):
+                    if not self.check_rectangle_intersection(pot_x, pot_y, x1-s1, y1-s1, x1, y1) and self.check_rectangle_intersection(self.x, self.y, x1-s1, y1-s1, x1, y1):
                         if i.moved and i!=self:
-                            print('stop_on_place')
-                            self.x, self.y = old_x, old_y
+
+                            fl = True
                             self.moved = False
                             break
                     else:
                         self.moved = True
+                if not fl:
+                    self.x, self.y = pot_x, pot_y
+                else:
+                    print('refused')
+            else:
+                print('wrong_dir')
 
 
 
