@@ -34,7 +34,7 @@ class Car:
         self.is_stopped = False
 
         if self.car_type == 1:
-            self.size1 = 10
+            self.size1 = 20
             self.size2 = 10
         else:
             self.size1 = 10
@@ -125,8 +125,6 @@ class Car:
                         self.moved = True
                 if not fl:
                     self.x, self.y = pot_x, pot_y
-                else:
-                    print('refused')
             else:
                 print('wrong_dir')
 
