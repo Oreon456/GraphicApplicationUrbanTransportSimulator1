@@ -20,9 +20,11 @@ def get_new_direction(prev, l):
 
 class Car:
     def __init__(self, x, y, speed, dir1, dir2, type): # dir1 и dir2 могут быть 1 -1 и 0
+        self.cords_updated = False
         self.car_type = type
         self.moved = True
         self.x, self.y = x, y
+
         self.speed = speed
         if self.car_type==1:
             self.speed-=1
@@ -61,27 +63,24 @@ class Car:
     def update(self, cords):
 
         directions_math_transcriptor = {'intersection': [[1, 0], [-1, 0], [0, 1], [0, -1]], 'left/right': [[1, 0], [-1, 0]], 'up/down': [[0, 1], [0, -1]]}
-
+        old_x = self.x
+        old_y = self.y
         p_x, p_y = self.x+self.speed*self.dir1, self.y+self.speed*self.dir2
 
         tile1 = (p_x//25, p_y//25)
         tile1 = tile1[::-1]
-        old_x, old_y = self.x, self.y
+
 
         try:
+            self.cords_updated = False
 
             if (matrix[tile1[0]][tile1[1]])!=0:
 
-
                 if tile1!=self.tile:
-                    old_x, old_y = self.x, self.y
                     self.tile = tile1
 
                     list_of_choices = directions_math_transcriptor[matrix[self.tile[0]][self.tile[1]].direction]
-                    print(matrix[self.tile[0]][self.tile[1]].direction)
-                    print(matrix[self.tile[0]][self.tile[1]].direction, self.tile)
-                    print(matrix[self.tile[0]][self.tile[1]], list_of_choices)
-                    print(list_of_choices)
+
 
                     new_dir = get_new_direction([self.dir1, self.dir2], list_of_choices)
                     if self.dir1!=new_dir[0]:
@@ -94,26 +93,32 @@ class Car:
                             self.image.fill((0, 0, 255))
 
                     self.dir1, self.dir2 =new_dir[0], new_dir[1]
+
                 if self.dir1==1:
+                    self.cords_updated =True
                     self.x=p_x
                     self.y = self.tile[0]*25+15
+
                 elif self.dir1==-1:
+                    self.cords_updated = True
                     self.x = p_x
                     self.y = self.tile[0] * 25
                 elif self.dir2==-1:
+                    self.cords_updated = True
                     self.y = p_y
                     self.x = self.tile[1] * 25 + 15
-                elif self.dir2==1:
+                else:
                     self.y = p_y
+                    self.cords_updated = True
                     self.x = self.tile[1] * 25
                 for i in cords:
                     x1, y1 = i.x, i.y
                     s1, s2 = i.size1, i.size2
-                    if not self.check_rectangle_intersection(self.x, self.y, x1, y1, x1 + s1, y1 + s2) and self.check_rectangle_intersection(old_x, old_y, x1, y1, x1 + s1, y1 + s2):
+                    if not self.check_rectangle_intersection(self.x, self.y, x1-s1, y1-s1, x1, y1) and self.check_rectangle_intersection(old_x, old_y, x1-s1, y1-s1, x1, y1):
                         if i.moved and i!=self:
+                            print('stop_on_place')
                             self.x, self.y = old_x, old_y
                             self.moved = False
-                            print('error')
                             break
                     else:
                         self.moved = True
@@ -125,8 +130,6 @@ class Car:
 
             return True
         except:
-
-
             print('false')
             return False
 

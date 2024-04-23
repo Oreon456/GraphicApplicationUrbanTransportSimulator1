@@ -36,18 +36,20 @@ My_world = World(matrix, screen)
 objects = []
 while running:
     objects = objects+generate_cars(cnt)
-    objects.sort(key = lambda x: x.speed)
+
     cnt = 0
     screen.fill((0, 0, 0))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
     My_world.draw()
+
     for i in objects:
+
         if not i.draw(screen, objects):
             objects.remove(i)
-            cnt+=1
 
+            cnt+=1
 
 
     pygame.display.flip()
